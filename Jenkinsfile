@@ -7,14 +7,14 @@ pipeline {
 
     parameters {
         string(name: 'BRANCH_NAME', defaultValue: 'main', description: 'Branch to build from')
-        string(name: 'STUDENT_NAME', defaultValue: 'Sana Idrees', description: 'Provide your name')
+        string(name: 'STUDENT_NAME', defaultValue: 'Sana Idrees', description: 'Your name (required)')
         choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Select environment')
         booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run Jest tests after build')
     }
 
     environment {
         APP_VERSION = "1.0.${BUILD_NUMBER}"
-        MAINTAINER = "Sana Idrees"
+        MAINTAINER = "Student"
     }
 
     stages {
@@ -38,7 +38,7 @@ pipeline {
                 bat '''
                 echo Simulating build process...
                 if not exist build mkdir build
-                copy *.js build
+                xcopy src\\*.js build\\ /Y
                 echo Build completed successfully!
                 echo App version: %APP_VERSION% > build\\version.txt
                 '''
